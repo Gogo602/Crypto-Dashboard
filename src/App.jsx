@@ -1,4 +1,6 @@
 import { useEffect, useState } from "react"
+import LimitSwitcher from "./components/LimitSwitcher";
+import FilterInput from "./components/FilterInput";
 
 
 const API_URL = 'https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd'
@@ -8,6 +10,7 @@ export default function App() {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
   const [limit, setLimit] = useState(10)
+  const [filter, setFilter] = useState("")
 
   useEffect(() => {
     const getCoins = async () => {
@@ -26,9 +29,19 @@ export default function App() {
     getCoins()
   }, [limit])
 
+
+  const filteredCoins = coins.filter((coin) => {
+    return coin.symbol.toLowerCase().includes(filter.toLocaleLowerCase()) || coin.name.toLowerCase().includes(filter.toLocaleLowerCase())
+  })
+
   return ( 
       <div className='p-5 w-full'>
           <h1 className="font-bold text-3xl">Crypto Dashboard</h1>
+          
+          <div className="flex items-center justify-between w-full gap-10">
+            <FilterInput filter={filter} onFilterChange={setFilter}/>
+            <LimitSwitcher limit={limit} onlimitChange={setLimit}/>
+          </div>
           
           {loading && (
             <p className="flex items-center justify-center h-[70vh]">Loading</p>
@@ -37,18 +50,8 @@ export default function App() {
             <p className="flex items-center justify-center h-[70vh]">{error.message}</p>
           )}
           
-          <div className="my-5">
-            <label htmlFor="limit">View: </label>
-            <select name="limit" value={Number(limit)} onChange={(e) => setLimit(e.target.value)} className="w-15">
-              <option value="10">10</option>
-              <option value="20">20</option>
-              <option value="30">30</option>
-              <option value="40">40</option>
-            </select>
-          </div>
-          
           <div className="grid grid-cols-1 gap-5 mt-5 md:grid-cols-2 lg:grid-cols-4">
-            {!loading && !error && coins.map((coin) => (
+            {!loading && !error && filteredCoins.length > 0 ? filteredCoins.map((coin) => (
                 <div key={coin.id} className="bg-gray-700 rounded-md p-5">
                    <div className="flex items-center gap-3">
                       <img src={coin.image} alt={coin.name} className="w-8"/>
@@ -67,7 +70,11 @@ export default function App() {
                       </div>
                     </div>
                 </div>
-            ))}
+            )) : (
+                <div className="flex items-center justify-center h-[60vh] w-full">
+                  <p>No Coins matches your search</p>
+                </div>
+            )}
           </div>
       </div>
   )
