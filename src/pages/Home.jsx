@@ -4,7 +4,7 @@ import LimitSwitcher from '../components/LimitSwitcher'
 
 export default function Home({filter, setFilter, limit, setLimit, loading,  error, filteredCoins }) {
   return (
-    <div className='p-5 w-full'>
+    <section className='p-5 w-full'>
           <h1 className="font-bold text-3xl">Crypto Dashboard</h1>
           
           <div className="flex items-center justify-between w-full gap-10">
@@ -45,6 +45,6 @@ export default function Home({filter, setFilter, limit, setLimit, loading,  erro
                 </div>
             )}
           </div>
-      </div>
+      </section>
   )
 }

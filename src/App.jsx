@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react"
 import { Route, Routes } from "react-router-dom";
 import Home from "./pages/Home";
+import NotFound from "./pages/NotFound";
 
 
 const API_URL = 'https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd'
@@ -47,6 +48,7 @@ export default function App() {
           filteredCoins={filteredCoins}
         />
       } />
+      <Route path="*" element={<NotFound />}/>
     </Routes>
   )
 };
