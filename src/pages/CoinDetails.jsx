@@ -9,7 +9,7 @@ export default function CoinDetails() {
     const [loading, setLoading] = useState(true)
     const [error, setError ] = useState(null)
     const { id } = useParams()
-    console.log(coin)
+   
 
     useEffect(() => {
         const getCoin = async () => {
@@ -31,6 +31,7 @@ export default function CoinDetails() {
 
   return (
     <section className='flex items-center justify-center min-h-screen py-5 px-2'>
+        
         {loading && (
             <p>Loading...</p>
         )}
@@ -44,13 +45,17 @@ export default function CoinDetails() {
                     <h2 className='font-bold text-3xl'>{coin.name}({coin.symbol.toUpperCase()})</h2>
                 </div>
                 <p>{coin.description?.en.split(". ")[0] + '.'}</p>
-                <div>
+                <div className='space-y-5 font-semibold'>
                     <p>Rank: {" "}{coin.market_cap_rank}</p>
                     <p>Current Price: {" "} ${coin.market_data.current_price.usd.toLocaleString()}</p>
-                    <p>Market Cap: {" "} {coin.market_data.market_cap.usd.toLocaleString()}</p>
-                    <p>24h High: {" "} {coin.market_data.high_24h.usd.toLocaleString()}</p>
-                    <p>24h Low: {" "} {coin.market_data.low_24h.usd.toLocaleString()}</p>
-                    <p>24h Price Change: {" "} {coin.market_data.price_change_24h.toFixed(2)}</p>
+                    <p>Market Cap: {" "} ${coin.market_data.market_cap.usd.toLocaleString()}</p>
+                    <p>24h High: {" "} ${coin.market_data.high_24h.usd.toLocaleString()}</p>
+                    <p>24h Low: {" "} ${coin.market_data.low_24h.usd.toLocaleString()}</p>
+                    <p>24h Price Change:  {" "}
+                        <span style={{color: coin.market_data.price_change_24h > 0 ? "green" : "red"}}>
+                            {coin.market_data.price_change_24h.toFixed(2)}
+                        </span>
+                    </p>
                 </div>
             </div>
         )}

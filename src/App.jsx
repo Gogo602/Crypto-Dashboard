@@ -3,6 +3,7 @@ import { Route, Routes } from "react-router-dom";
 import Home from "./pages/Home";
 import NotFound from "./pages/NotFound";
 import CoinDetails from "./pages/CoinDetails";
+import Navbar from "./components/Navbar";
 
 
 const API_URL = 'https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd'
@@ -37,20 +38,23 @@ export default function App() {
   })
 
   return ( 
-    <Routes>
-      <Route path="/" element={
-        <Home
-          filter={filter} 
-          setFilter={setFilter}
-          limit={limit} 
-          setLimit={setLimit} 
-          loading={loading} 
-          error={error} 
-          filteredCoins={filteredCoins}
-        />
-      } />
-      <Route path="coin/:id" element={<CoinDetails />}/>
-      <Route path="*" element={<NotFound />}/>
-    </Routes>
+    <>
+      <Navbar />
+      <Routes>
+        <Route path="/" element={
+          <Home
+            filter={filter} 
+            setFilter={setFilter}
+            limit={limit} 
+            setLimit={setLimit} 
+            loading={loading} 
+            error={error} 
+            filteredCoins={filteredCoins}
+          />
+        } />
+        <Route path="coin/:id" element={<CoinDetails />}/>
+        <Route path="*" element={<NotFound />}/>
+      </Routes>
+    </>
   )
 };
