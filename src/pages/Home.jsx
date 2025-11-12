@@ -2,6 +2,7 @@ import React from 'react'
 import FilterInput from '../components/FilterInput'
 import LimitSwitcher from '../components/LimitSwitcher'
 import { Link } from 'react-router-dom'
+import Spinner from '../components/Spinner'
 
 export default function Home({filter, setFilter, limit, setLimit, loading,  error, filteredCoins }) {
   return (
@@ -14,7 +15,9 @@ export default function Home({filter, setFilter, limit, setLimit, loading,  erro
           </div>
           
           {loading && (
-            <p className="flex items-center justify-center h-[70vh]">Loading</p>
+            <p className="flex items-center justify-center h-[70vh]">
+              <Spinner />
+            </p>
           )}
           {error && (
             <p className="flex items-center justify-center h-[70vh]">{error.message}</p>
