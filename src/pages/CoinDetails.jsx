@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import Spinner from '../components/Spinner'
+import CoinChart from '../components/CoinChart'
 
 
 const API_URL = 'https://api.coingecko.com/api/v3/coins' 
@@ -62,6 +63,9 @@ export default function CoinDetails() {
                       <p>All Time High {" "} ${coin.market_data.ath.usd.toLocaleString()}</p>
                       <p>All Time Low {" "} ${coin.market_data.atl.usd.toLocaleString()}</p>
                       <p>Last Updated {" "} {coin.last_updated}</p>
+
+                      <CoinChart coinId={coin.id} />
+                      
                       <div className='flex flex-col space-y-5'>
                           {coin.links.homepage[0] && (
                               <a href={coin.links.homepage[0]} target="_blank" rel="noopener noreferrer">Website</a>
