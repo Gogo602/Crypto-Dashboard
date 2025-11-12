@@ -39,7 +39,7 @@ export default function CoinDetails() {
             <p className='text-red'>{error.message}</p>
         )}
         {!loading && !error && (
-            <div className='border bg-gray-700 md:min-w-md max-w-md p-5 shadow-2xl space-y-5 rounded-lg'>
+            <div className='border bg-gray-700 md:min-w-lg max-w-lg p-5 shadow-2xl space-y-5 rounded-lg'>
                 <div className='spacce-y-7 text-center'>
                     <img src={coin.image?.large} alt={coin.id} className='mx-auto w-30'/>
                     <h2 className='font-bold text-3xl'>{coin.name}({coin.symbol.toUpperCase()})</h2>
@@ -55,7 +55,22 @@ export default function CoinDetails() {
                         <span style={{color: coin.market_data.price_change_24h > 0 ? "green" : "red"}}>
                             {coin.market_data.price_change_24h.toFixed(2)}
                         </span>
-                    </p>
+                      </p>
+                      <p>Circulating Supply {" "} ${coin.market_data.circulating_supply.toLocaleString()}</p>
+                      <p>Total Supply {" "} ${coin.market_data.total_supply.toLocaleString()}</p>
+                      <p>All Time High {" "} ${coin.market_data.ath.usd.toLocaleString()}</p>
+                      <p>All Time Low {" "} ${coin.market_data.atl.usd.toLocaleString()}</p>
+                      <p>Last Updated {" "} {coin.last_updated}</p>
+                      <div className='flex flex-col space-y-5'>
+                          {coin.links.homepage[0] && (
+                              <a href={coin.links.homepage[0]} target="_blank" rel="noopener noreferrer">Website</a>
+                          )}
+
+                          {coin.links.blockchain_site[0] && (
+                              <a href={coin.links.blockchain_site[0]} target="_blank" rel="noopener noreferrer">Blockchain Explorer</a>
+                          )}
+                      </div>
+                       <p>Categories: <br /> {" "} {coin.categories.join(", ")}</p>
                 </div>
             </div>
         )}
